@@ -1,0 +1,27 @@
+{
+  "required":       "Міндетті өріс",
+  "invalidEmail":   "Қате email",
+  "invalidPhone":   "Қате телефон нөмірі",
+  "minLength":      "Кемінде {min} таңба",
+  "maxLength":      "Ең көбі {max} таңба",
+  "submit":         "Жіберу",
+  "sending":        "Жіберілуде...",
+  "successTitle":   "Өтінім жіберілді!",
+  "successDesc":    "Менеджер жақын арада сізбен хабарласады.",
+  "errorTitle":     "Жіберу қатесі",
+  "errorDesc":      "Қайталап көріңіз немесе WhatsApp арқылы жазыңыз.",
+  "fields": {
+    "name":    "Сіздің атыңыз",
+    "phone":   "Телефон нөмірі",
+    "email":   "Email",
+    "message": "Хабарлама",
+    "area":    "Бөлме ауданы (м²)"
+  },
+  "placeholders": {
+    "name":    "Иван Иванов",
+    "phone":   "+7 (___) ___-__-__",
+    "email":   "example@mail.ru",
+    "message": "Сіздің сұрағыңыз немесе пікіріңіз...",
+    "area":    "мысалы, 24"
+  }
+}

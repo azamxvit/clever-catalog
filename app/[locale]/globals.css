@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Brand Tokens */
+@layer base {
+  :root {
+    --color-navy:         #052150;
+    --color-navy-light:   #0a3270;
+    --color-navy-dark:    #031540;
+    --color-clover:       #3a8a3f;
+    --color-clover-light: #4daa54;
+    --color-gold:         #c9a96e;
+    --color-cream:        #f8f5f0;
+    --color-stone:        #e8e4de;
+    --color-text:         #1a1a2e;
+    --color-text-muted:   #6b6b80;
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Inter', system-ui, sans-serif;
+
+    --container-max:    1280px;
+    --section-py:       5rem;
+    --shadow-card:      0 2px 16px rgba(5, 33, 80, 0.08);
+    --shadow-card-hover:0 8px 40px rgba(5, 33, 80, 0.16);
+    --transition-default: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* shadcn/ui */
+    --background:         0 0% 97%;
+    --foreground:         222 60% 10%;
+    --card:               0 0% 100%;
+    --card-foreground:    222 60% 10%;
+    --primary:            220 84% 17%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:          35 20% 92%;
+    --secondary-foreground: 220 84% 17%;
+    --muted:              35 15% 90%;
+    --muted-foreground:   220 10% 46%;
+    --accent:             130 40% 39%;
+    --accent-foreground:  0 0% 100%;
+    --border:             35 15% 86%;
+    --input:              35 15% 86%;
+    --ring:               220 84% 17%;
+    --radius:             0.75rem;
+  }
+
+  .dark {
+    --color-cream:      #0f1a2e;
+    --color-stone:      #1a2a42;
+    --color-text:       #e8e4de;
+    --color-text-muted: #8899aa;
+
+    --background:       222 47% 8%;
+    --foreground:       35 20% 92%;
+    --card:             222 47% 11%;
+    --card-foreground:  35 20% 92%;
+    --secondary:        222 40% 16%;
+    --secondary-foreground: 35 20% 92%;
+    --muted:            222 40% 14%;
+    --muted-foreground: 222 15% 60%;
+    --border:           222 40% 18%;
+    --input:            222 40% 18%;
+  }
+}
+
+/* Base Reset */
+@layer base {
+  *, ::after, ::before {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-cream);
+    color: var(--color-text);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+  }
+
+  img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+/*  Utility Classes  */
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+
+  .text-navy {
+    color: var(--color-navy); 
+  }
+  .text-clover { 
+    color: var(--color-clover); 
+  }
+  .text-gold { 
+    color: var(--color-gold); 
+  }
+  .bg-navy { 
+    background-color: var(--color-navy); 
+  }
+  .bg-navy-light { 
+    background-color: var(--color-navy-light); 
+  }
+  .bg-cream { 
+    background-color: var(--color-cream); }
+  .border-stone {
+    border-color: var(--color-stone);
+  }
+
+  .container-clever {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px)  {
+    .container-clever { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container-clever { padding-inline: 3rem; }
+  }
+
+  .section-py {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
+
+  .shadow-card       {
+    box-shadow: var(--shadow-card); 
+  }
+  .shadow-card-hover { 
+    box-shadow: var(--shadow-card-hover); 
+  }
+
+  .bg-whatsapp        { 
+    background-color: #25D366; 
+  }
+  .bg-whatsapp:hover  { 
+    background-color: #1ebe5d; 
+  }
+
+  .img-zoom { 
+    overflow: hidden; 
+  }
+  .img-zoom img { 
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1); 
+  }
+  .img-zoom:hover img { 
+    transform: scale(1.06); 
+  }
+}
+
+/* Scrollbar  */
+::-webkit-scrollbar       { 
+  width: 6px; height: 6px; 
+}
+::-webkit-scrollbar-track { 
+  background: var(--color-cream); 
+}
+::-webkit-scrollbar-thumb { 
+  background: var(--color-navy); 
+  border-radius: 99px; 
+}
+::-webkit-scrollbar-thumb:hover { 
+  background: var(--color-navy-light); 
+}
+
+/*  Selection  */
+::selection { 
+  background-color: var(--color-navy); 
+  color: #fff; 
+}
