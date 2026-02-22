@@ -6,7 +6,7 @@ import { AboutValues }   from "@/components/sections/about/AboutValues";
 import { AboutContacts } from "@/components/sections/about/AboutContacts";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("about.meta");
+  const t = await getTranslations("pages.about.meta");
   return { title: t("title"), description: t("description") };
 }
 

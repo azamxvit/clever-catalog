@@ -9,7 +9,7 @@ import {
 } from "@/lib/constants";
 
 export async function Footer() {
-  const t  = await getTranslations("footer");
+  const t  = await getTranslations("pages.footer");
   const tn = await getTranslations("nav");
 
   const year = new Date().getFullYear();
@@ -40,6 +40,7 @@ export async function Footer() {
               { label: t("allProducts"),  href: "/catalog" },
               { label: tn("laminate"),    href: "/catalog?category=laminate" },
               { label: tn("porcelain"),   href: "/catalog?category=porcelain" },
+              { label: tn("tile"),        href: "/kafel" },
               { label: tn("about"),       href: "/about" },
             ].map((l) => (
               <li key={l.href}>

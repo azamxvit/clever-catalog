@@ -1,10 +1,10 @@
 "use client";
 
-// components/sections/about/AboutHero.tsx
+// src/components/sections/about/AboutHero.tsx
 import { useTranslations } from "next-intl";
 
 export function AboutHero() {
-  const t = useTranslations("about.hero");
+  const t = useTranslations("pages.about.hero");
 
   return (
     <section className="relative bg-[#052150] pt-36 pb-24 overflow-hidden">

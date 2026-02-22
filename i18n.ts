@@ -4,13 +4,12 @@ import { locales, type Locale } from "./i18n-config";
 
 const SECTIONS = [
   "common",
-  "nav",
-  "catalog",
-  "home",
-  "forms",
+  "nav", 
+  "home",     
+  "catalog",  
+  "pages",   
+  "forms",   
   "errors",
-  "about",
-  "footer",
 ] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {

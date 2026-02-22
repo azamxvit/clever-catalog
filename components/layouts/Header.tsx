@@ -22,8 +22,9 @@ export function Header() {
 
   const NAV_LINKS = [
     { label: t("catalog"),   href: "/catalog" },
-    { label: t("laminate"),  href: "/catalog?category=laminate" },
-    { label: t("porcelain"), href: "/catalog?category=porcelain" },
+    { label: t("laminate"),  href: "/laminat" },
+    { label: t("porcelain"), href: "/ceramogranit" },
+    { label: t("tile"),      href: "/kafel" },
     { label: t("about"),     href: "/about" },
   ];
 
@@ -54,7 +55,6 @@ export function Header() {
             <Phone className="h-3 w-3" />
             {PHONE_DISPLAY}
           </a>
-          {/* Адрес → ссылка на 2GIS */}
           <a
             href={MAP_2GIS}
             target="_blank"
@@ -84,7 +84,6 @@ export function Header() {
               className="group relative inline-flex py-1 text-[13px] font-medium tracking-wide text-white/80 hover:text-white transition-colors"
             >
               {link.label}
-              {/* Жесткий цвет и физическая линия */}
               <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#3a8a3f] transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
@@ -114,7 +113,7 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile menu — плавное раскрытие */}
+      {/* Mobile menu */}
       <div className={cn(
         "md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-navy",
         menuOpen ? "max-h-screen border-t border-white/10" : "max-h-0"

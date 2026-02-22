@@ -1,122 +1,157 @@
 "use client";
 
-import { SlidersHorizontal, Search, RotateCcw } from "lucide-react";
+// components/widgets/FilterBar.tsx
+import { useTranslations } from "next-intl";
 import { useFilterStore } from "@/store/filter-store";
-import type { SortOption } from "@/store/filter-store";
-import type { Category } from "@/lib/mock-data";
+import { Search, X, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Category } from "@/lib/mock-data";
 
-const CATEGORIES: { value: Category | "all"; label: string }[] = [
-  { value: "all",       label: "Все" },
-  { value: "laminate",  label: "Ламинат" },
-  { value: "porcelain", label: "Керамогранит" },
+type SortOption = "default" | "price_asc" | "price_desc" | "title_asc";
+
+const CATEGORIES: Array<{ key: "all" | Category }> = [
+  { key: "all" },
+  { key: "laminate" },
+  { key: "porcelain" },
+  { key: "tile" },
 ];
 
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "default",    label: "По умолчанию" },
-  { value: "price_asc",  label: "Сначала дешевле" },
-  { value: "price_desc", label: "Сначала дороже" },
-  { value: "title_asc",  label: "По названию" },
+const SORT_OPTIONS: Array<{ value: SortOption; labelKey: string }> = [
+  { value: "default",    labelKey: "default" },
+  { value: "price_asc",  labelKey: "priceAsc" },
+  { value: "price_desc", labelKey: "priceDesc" },
+  { value: "title_asc",  labelKey: "titleAsc" },
 ];
 
-export function FilterBar() {
-  const {
-    category, setCategory,
-    inStockOnly, setInStockOnly,
-    sort, setSort,
-    search, setSearch,
-    resetFilters,
-  } = useFilterStore();
+interface FilterBarProps {
+  // На страницах категорий (ceramogranit, laminat) скрываем фильтр по категории — он уже пресетен
+  hideCategoryFilter?: boolean;
+}
 
-  const isDirty =
-    category !== "all" || inStockOnly || sort !== "default" || search.trim() !== "";
+export function FilterBar({ hideCategoryFilter = false }: FilterBarProps) {
+  const t = useTranslations("catalog");
+
+  const category    = useFilterStore((s) => s.category);
+  const sort        = useFilterStore((s) => s.sort);
+  const search      = useFilterStore((s) => s.search);
+  const inStockOnly = useFilterStore((s) => s.inStockOnly);
+  const setCategory    = useFilterStore((s) => s.setCategory);
+  const setSort        = useFilterStore((s) => s.setSort);
+  const setSearch      = useFilterStore((s) => s.setSearch);
+  const setInStockOnly = useFilterStore((s) => s.setInStockOnly);
+  const resetFilters   = useFilterStore((s) => s.resetFilters);
+
+  const hasActiveFilters = (!hideCategoryFilter && category !== "all") || sort !== "default" || search !== "" || inStockOnly;
 
   return (
-    <div className="bg-white rounded-2xl shadow-card p-4 sm:p-5 flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
 
-      {/*  Row 1: Search + Reset  */}
-      <div className="flex gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-navy/40 pointer-events-none" />
-          <input
-            type="text"
-            placeholder="Поиск по названию..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-stone text-[14px]
-                       focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/40 transition"
-          />
+      {/* Заголовок + сброс */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-[13px] font-semibold text-[#052150]">
+          <SlidersHorizontal className="w-4 h-4 text-[#052150]/50" />
+          {t("filters")}
         </div>
-
-        {isDirty && (
+        {hasActiveFilters && (
           <button
             onClick={resetFilters}
-            title="Сбросить фильтры"
-            className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-stone text-[13px]
-                       text-navy/60 hover:text-navy hover:border-navy/30 transition-colors"
+            className="flex items-center gap-1 text-[12px] text-[#052150]/40 hover:text-[#052150] transition-colors"
           >
-            <RotateCcw className="h-4 w-4" />
-            <span className="hidden sm:inline">Сбросить</span>
+            <X className="w-3 h-3" />
+            {t("resetFilters")}
           </button>
         )}
       </div>
 
-      {/* Row Category chips + Sort  */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      {/* Поиск */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#052150]/30" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={t("searchPlaceholder")}
+          className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#e8e4de] bg-white text-[14px] text-[#052150]
+                     placeholder:text-[#052150]/30 focus:outline-none focus:border-[#052150]/30 transition-colors"
+        />
+        {search && (
+          <button
+            onClick={() => setSearch("")}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#052150]/30 hover:text-[#052150] transition-colors"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
 
-        {/* Category tabs */}
-        <div className="flex gap-2">
-          {CATEGORIES.map((c) => (
+      {/* Категория */}
+      {!hideCategoryFilter && (
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[#052150]/40 mb-3">
+            {t("categoryLabel")}
+          </p>
+          <div className="flex flex-col gap-1.5">
+            {CATEGORIES.map(({ key }) => (
+              <button
+                key={key}
+                onClick={() => setCategory(key)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-medium transition-all duration-150 text-left",
+                  category === key
+                    ? "bg-[#052150] text-white"
+                    : "text-[#052150]/70 hover:bg-[#052150]/5 hover:text-[#052150]"
+                )}
+              >
+                {t(`categories.${key}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Сортировка */}
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-[#052150]/40 mb-3">
+          {t("sortLabel")}
+        </p>
+        <div className="flex flex-col gap-1.5">
+          {SORT_OPTIONS.map(({ value, labelKey }) => (
             <button
-              key={c.value}
-              onClick={() => setCategory(c.value)}
+              key={value}
+              onClick={() => setSort(value)}
               className={cn(
-                "px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200",
-                category === c.value
-                  ? "bg-navy text-white shadow-sm"
-                  : "bg-stone/60 text-navy/70 hover:bg-stone hover:text-navy"
+                "flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-medium transition-all duration-150 text-left",
+                sort === value
+                  ? "bg-[#052150] text-white"
+                  : "text-[#052150]/70 hover:bg-[#052150]/5 hover:text-[#052150]"
               )}
             >
-              {c.label}
+              {t(`sort.${labelKey}`)}
             </button>
           ))}
         </div>
-
-        {/* Sort select */}
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-navy/40 shrink-0" />
-          <select
-            aria-label="Сортировка каталога"
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortOption)}
-            className="text-[13px] text-navy/80 bg-transparent border-0 focus:outline-none cursor-pointer pr-1"
-          >
-            {SORT_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
-        </div>
       </div>
 
-      {/* Row In Stock toggle ── */}
-      <label className="flex items-center gap-3 cursor-pointer w-fit">
-        <div className="relative">
-          <input
-            type="checkbox"
-            className="sr-only"
-            checked={inStockOnly}
-            onChange={(e) => setInStockOnly(e.target.checked)}
-          />
+      {/* Тоггл "В наличии" */}
+      <label className="flex items-center gap-3 cursor-pointer group">
+        <div className={cn(
+          "w-10 h-5 rounded-full relative transition-colors duration-200",
+          inStockOnly ? "bg-[#3a8a3f]" : "bg-[#e8e4de]"
+        )}>
           <div className={cn(
-            "w-9 h-5 rounded-full transition-colors duration-200",
-            inStockOnly ? "bg-clover" : "bg-stone"
-          )} />
-          <div className={cn(
-            "absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200",
-            inStockOnly ? "translate-x-4" : "translate-x-0"
+            "absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200",
+            inStockOnly ? "translate-x-5" : "translate-x-0.5"
           )} />
         </div>
-        <span className="text-[13px] font-medium text-navy/70">Только в наличии</span>
+        <input
+          type="checkbox"
+          checked={inStockOnly}
+          onChange={(e) => setInStockOnly(e.target.checked)}
+          className="sr-only"
+        />
+        <span className="text-[13px] font-medium text-[#052150]/70 group-hover:text-[#052150] transition-colors">
+          {t("onlyInStock")}
+        </span>
       </label>
     </div>
   );

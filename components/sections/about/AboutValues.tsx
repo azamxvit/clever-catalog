@@ -1,6 +1,6 @@
 "use client";
 
-// components/sections/about/AboutValues.tsx
+// src/components/sections/about/AboutValues.tsx
 import { useTranslations } from "next-intl";
 import { ShieldCheck, Sparkles, MessageCircle, Clock } from "lucide-react";
 
@@ -8,7 +8,7 @@ const VALUE_KEYS = ["quality", "design", "service", "speed"] as const;
 const VALUE_ICONS = { quality: ShieldCheck, design: Sparkles, service: MessageCircle, speed: Clock };
 
 export function AboutValues() {
-  const t = useTranslations("about.values");
+  const t = useTranslations("pages.about.values");
 
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -16,11 +16,11 @@ export function AboutValues() {
 
         <div className="text-center max-w-[500px] mx-auto mb-14">
           <p className="text-[11px] font-medium tracking-[0.22em] uppercase text-[#052150]/40 mb-3">
-            {t("sectionLabel")}
+            {t("label")}
           </p>
           <h2 className="text-[38px] sm:text-[46px] font-semibold text-[#052150] leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-            {t("sectionTitle")}
+            {t("title")} 
           </h2>
         </div>
 

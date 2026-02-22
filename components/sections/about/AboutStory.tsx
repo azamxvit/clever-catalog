@@ -1,10 +1,10 @@
 "use client";
 
-// components/sections/about/AboutStory.tsx
+// src/components/sections/about/AboutStory.tsx
 import { useTranslations } from "next-intl";
 
 export function AboutStory() {
-  const t = useTranslations("about.story");
+  const t = useTranslations("pages.about.story");
 
   return (
     <section className="bg-[#f8f5f0] py-20 lg:py-28">
@@ -14,7 +14,7 @@ export function AboutStory() {
           {/* Text */}
           <div>
             <p className="text-[11px] font-medium tracking-[0.22em] uppercase text-[#052150]/40 mb-4">
-              {t("sectionLabel")}
+              {t("label")}
             </p>
             <h2 className="text-[38px] sm:text-[46px] font-semibold text-[#052150] leading-tight mb-6"
               style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
@@ -32,7 +32,7 @@ export function AboutStory() {
             <div className="aspect-[4/3] rounded-2xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
-                alt={t("imageAlt")}
+                alt="Clever Showroom"
                 className="w-full h-full object-cover"
               />
             </div>

@@ -1,50 +1,52 @@
 "use client";
 
-import { PackageSearch } from "lucide-react";
-import { useFilterStore, applyFilters } from "@/store/filter-store";
-import { products } from "@/lib/mock-data";
+// components/widgets/ProductGrid.tsx
+import { useTranslations } from "next-intl";
+import { useFilterStore } from "@/store/filter-store";
+import { ALL_PRODUCTS } from "@/lib/mock-data";
+import { applyFilters } from "@/lib/utils";
 import { ProductCard } from "./ProductCard";
+import { PackageSearch } from "lucide-react";
 
 export function ProductGrid() {
-  const filterState   = useFilterStore();
-  const filtered      = applyFilters(products, filterState);
-  const { resetFilters } = useFilterStore();
+  const t = useTranslations("catalog");
+  
+  const category    = useFilterStore((s) => s.category);
+  const sort        = useFilterStore((s) => s.sort);
+  const search      = useFilterStore((s) => s.search);
+  const inStockOnly = useFilterStore((s) => s.inStockOnly);
 
-  if (filtered.length === 0) {
+  const products = applyFilters(ALL_PRODUCTS, { category, sort, search, inStockOnly });
+
+  if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-        <PackageSearch className="h-12 w-12 text-navy/20" />
-        <h3 className="font-display text-xl text-navy/60">Ничего не найдено</h3>
-        <p className="text-[14px] text-navy/40 max-w-xs">
-          Попробуйте изменить фильтры или сбросить поиск
-        </p>
-        <button
-          onClick={resetFilters}
-          className="mt-2 px-5 py-2 rounded-full bg-navy text-white text-[13px] font-medium hover:bg-navy-light transition-colors"
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <PackageSearch className="w-12 h-12 text-[#052150]/20 mb-4" strokeWidth={1.5} />
+        <h3
+          className="text-[20px] font-semibold text-[#052150] mb-2"
+          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
         >
-          Сбросить фильтры
-        </button>
+          {t("empty.title")}
+        </h3>
+        <p className="text-[14px] text-[#052150]/50 max-w-xs">
+          {t("empty.desc")}
+        </p>
       </div>
     );
   }
 
   return (
     <div>
-      {/* Count */}
-      <p className="text-[13px] text-navy/50 mb-5">
-        Найдено: <span className="font-semibold text-navy">{filtered.length}</span> товаров
-      </p>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-        {filtered.map((product, i) => (
-          <div
-            key={product.id}
-            className="animate-fade-in-up"
-            style={{ animationDelay: `${i * 60}ms` }}
-          >
-            <ProductCard product={product} />
-          </div>
+      <div className="flex items-center justify-between mb-5">
+        <p className="text-[13px] text-[#052150]/50">
+          {t("found")}{" "}
+          <span className="font-semibold text-[#052150]">{products.length}</span>{" "}
+          {t("products")}
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

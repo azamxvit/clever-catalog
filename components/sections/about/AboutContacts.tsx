@@ -1,12 +1,12 @@
 "use client";
 
-// components/sections/about/AboutContacts.tsx
+// src/components/sections/about/AboutContacts.tsx
 import { useTranslations } from "next-intl";
 import { Phone, MapPin, Clock, Instagram, MessageCircle } from "lucide-react";
 import { WHATSAPP_NUMBER, WA_GENERAL, PHONE_DISPLAY, ADDRESS, HOURS } from "@/lib/constants";
 
 export function AboutContacts() {
-  const t = useTranslations("about.contacts");
+  const t = useTranslations("pages.about.contacts");
 
   return (
     <section className="bg-[#f8f5f0] py-20 lg:py-28">
@@ -14,15 +14,15 @@ export function AboutContacts() {
 
         <div className="text-center max-w-[500px] mx-auto mb-14">
           <p className="text-[11px] font-medium tracking-[0.22em] uppercase text-[#052150]/40 mb-3">
-            {t("sectionLabel")}
+            {t("label")}
           </p>
           <h2 className="text-[38px] sm:text-[46px] font-semibold text-[#052150] leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-            {t("sectionTitle")}
+            {t("title")}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
           {/* Контактные карточки */}
           <div className="flex flex-col gap-4">
@@ -50,28 +50,28 @@ export function AboutContacts() {
             ))}
 
             {/* Соцсети */}
-            <div className="flex gap-3 mt-2">
+            <div className="flex flex-col sm:flex-row gap-3 mt-2">
               <a href="https://www.instagram.com/clever_atyrau" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-[#e8e4de] text-[13px] font-medium text-[#052150]/70 hover:text-[#052150] hover:border-[#052150]/20 transition-all">
-                <Instagram className="w-4 h-4" />
+                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white border border-[#e8e4de] text-[14px] font-medium text-[#052150]/70 hover:text-[#052150] hover:border-[#052150]/20 transition-all">
+                <Instagram className="w-4.5 h-4.5" />
                 @clever_atyrau
               </a>
               <a href={WA_GENERAL} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] text-[13px] font-medium text-white hover:bg-[#1ebe5d] transition-colors shadow-[0_2px_12px_rgba(37,211,102,0.3)]">
-                <MessageCircle className="w-4 h-4" />
-                WhatsApp
+                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#25D366] text-[14px] font-medium text-white hover:bg-[#1ebe5d] transition-colors shadow-[0_2px_12px_rgba(37,211,102,0.3)]">
+                <MessageCircle className="w-4.5 h-4.5" />
+                Написать в WhatsApp
               </a>
             </div>
           </div>
 
           {/* Карта (2GIS embed) */}
-          <div className="rounded-2xl overflow-hidden border border-[#e8e4de] min-h-[360px] bg-white relative">
+          <div className="w-full h-[400px] lg:h-full min-h-[400px] rounded-2xl overflow-hidden border border-[#e8e4de] bg-white relative">
             <iframe
               src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A47.122639%2C%22lon%22%3A51.866026%2C%22zoom%22%3A16%7D%2C%22opt%22%3A%7B%22city%22%3A%22atyrau%22%7D%2C%22org%22%3A%2270000001062424144%22%7D"
               width="100%"
               height="100%"
-              className="absolute inset-0 w-full h-full"
-              title={t("mapTitle")}
+              className="absolute inset-0 w-full h-full border-0"
+              title="2GIS Map"
               loading="lazy"
             />
           </div>
