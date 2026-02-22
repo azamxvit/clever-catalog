@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "@/components/providers/ThemeProviders";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layouts/index";
+import { Footer } from "@/components/layouts/index";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col bg-cream dark:bg-navy-dark antialiased suppressHydrationWarning">
+      <body className="flex min-h-screen flex-col bg-cream dark:bg-navy-dark antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

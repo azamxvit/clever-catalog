@@ -61,7 +61,7 @@ A production-ready online showcase for a premium flooring store (laminate, porce
 
 **Azamat Omirtay**
 * GitHub: [@azamxvit](https://github.com/azamxvit)
-* Role: Senior Frontend Engineer
+* Role: Frontend Engineer
 
 ---
 *Designed & Developed for "Clever — Удачные приобретения".*

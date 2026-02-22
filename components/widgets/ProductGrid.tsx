@@ -1,6 +1,5 @@
 "use client";
 
-// src/components/catalog/ProductGrid.tsx
 import { PackageSearch } from "lucide-react";
 import { useFilterStore, applyFilters } from "@/store/filter-store";
 import { products } from "@/lib/mock-data";

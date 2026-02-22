@@ -1,43 +1,48 @@
-// src/app/catalog/page.tsx
 import type { Metadata } from "next";
-import { FilterBar }   from "@/components/catalog/FilterBar";
-import { ProductGrid } from "@/components/catalog/ProductGrid";
+import { getTranslations } from "next-intl/server";
+import { FilterBar }   from "@/components/widgets/FilterBar";
+import { ProductGrid } from "@/components/widgets/ProductGrid";
 
-export const metadata: Metadata = {
-  title:       "Каталог",
-  description: "Весь ассортимент ламината и керамогранита в Атырау. Фильтр по категории, цене и наличию.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("catalog.meta");
+  return {
+    title:       t("title"),
+    description: t("description"),
+  };
+}
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  const t = await getTranslations("catalog");
+
   return (
-    <div className="pt-20 pb-16 bg-cream min-h-screen">
-      <div className="container-clever">
+    <div className="pt-20 pb-16 bg-[#f8f5f0] min-h-screen">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Page header */}
-        <div className="py-10 border-b border-stone mb-8">
-          <p className="text-[12px] font-medium tracking-widest uppercase text-navy/40 mb-2">
-            Clever / Каталог
+        <div className="py-10 border-b border-[#e8e4de] mb-8">
+          <p className="text-[12px] font-medium tracking-widest uppercase text-[#052150]/40 mb-2">
+            {t("breadcrumb")}
           </p>
-          <h1 className="font-display text-[42px] sm:text-[52px] font-semibold text-navy leading-tight">
-            Напольные покрытия
+          <h1
+            className="text-[42px] sm:text-[52px] font-semibold text-[#052150] leading-tight"
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+          >
+            {t("title")}
           </h1>
         </div>
 
-        {/* Layout: filters + grid */}
+        {/* Layout: filters sidebar + grid */}
         <div className="flex flex-col lg:flex-row gap-8">
-
-          {/* Sidebar filters (sticky on desktop) */}
           <aside className="lg:w-72 shrink-0">
             <div className="lg:sticky lg:top-24">
               <FilterBar />
             </div>
           </aside>
-
-          {/* Product grid */}
           <div className="flex-1 min-w-0">
             <ProductGrid />
           </div>
         </div>
+
       </div>
     </div>
   );

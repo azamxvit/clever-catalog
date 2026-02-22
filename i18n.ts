@@ -9,6 +9,8 @@ const SECTIONS = [
   "home",
   "forms",
   "errors",
+  "about",
+  "footer",
 ] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {

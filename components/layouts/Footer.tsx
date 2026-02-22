@@ -1,45 +1,46 @@
+// components/layouts/Footer.tsx
 import Link from "next/link";
 import { Phone, MapPin, Clock, Instagram } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { CleverLogo } from "@/components/shared/CleverLogo";
+import {
+  PHONE_DISPLAY, WHATSAPP_NUMBER, ADDRESS,
+  HOURS, INSTAGRAM, WA_GENERAL, MAP_2GIS,
+} from "@/lib/constants";
 
-const PHONE     = "+7 (778) 606-66-11";
-const PHONE_RAW = "77786066611";
-const WHATSAPP  = "77786066611";
-const ADDRESS   = "ТД Anna, Сырым Датова 54, Атырау";
-const HOURS     = "Ежедневно: 10:00 – 19:00";
-const INSTAGRAM = "https://www.instagram.com/clever_atyrau";
-const TWOGIS_LINK = "https://2gis.kz/atyrau/geo/70000001062424144";
+export async function Footer() {
+  const t  = await getTranslations("footer");
+  const tn = await getTranslations("nav");
 
-export function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <footer className="bg-navy text-white">
-      {/* ── Main ── */}
+
+      {/* Main */}
       <div className="container-clever py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
         {/* Brand */}
         <div className="lg:col-span-2">
-          <div className="flex flex-col leading-none mb-4">
-            <span className="font-display text-[28px] font-bold tracking-[0.18em] uppercase">
-              Clever<span className="text-clover">✦</span>
-            </span>
-            <span className="text-[10px] tracking-[0.28em] text-white/40 uppercase font-light mt-0.5">
-              Удачные приобретения
-            </span>
+          <div className="mb-4">
+            <CleverLogo size="md" />
           </div>
-          <p className="text-[14px] text-white/60 leading-relaxed max-w-xs">
-            Магазин напольных покрытий в Атырау. Ламинат и керамогранит от ведущих производителей.
+          <p className="text-[14px] text-white/60 leading-relaxed max-w-xs mt-2">
+            {t("description")}
           </p>
         </div>
 
         {/* Catalog */}
         <div>
-          <h4 className="text-[12px] font-semibold uppercase tracking-widest text-white/40 mb-4">Каталог</h4>
+          <h4 className="text-[12px] font-semibold uppercase tracking-widest text-white/40 mb-4">
+            {t("catalog")}
+          </h4>
           <ul className="flex flex-col gap-2.5">
             {[
-              { label: "Все товары",      href: "/catalog" },
-              { label: "Ламинат",         href: "/catalog?category=laminate" },
-              { label: "Керамогранит",    href: "/catalog?category=porcelain" },
+              { label: t("allProducts"),  href: "/catalog" },
+              { label: tn("laminate"),    href: "/catalog?category=laminate" },
+              { label: tn("porcelain"),   href: "/catalog?category=porcelain" },
+              { label: tn("about"),       href: "/about" },
             ].map((l) => (
               <li key={l.href}>
                 <Link
@@ -55,20 +56,22 @@ export function Footer() {
 
         {/* Contacts */}
         <div>
-          <h4 className="text-[12px] font-semibold uppercase tracking-widest text-white/40 mb-4">Контакты</h4>
+          <h4 className="text-[12px] font-semibold uppercase tracking-widest text-white/40 mb-4">
+            {t("contacts")}
+          </h4>
           <ul className="flex flex-col gap-3">
             <li>
               <a
-                href={`tel:${PHONE_RAW}`}
+                href={`tel:${WHATSAPP_NUMBER}`}
                 className="flex items-start gap-2.5 text-[14px] text-white/70 hover:text-white transition-colors"
               >
                 <Phone className="h-4 w-4 mt-0.5 text-clover shrink-0" />
-                {PHONE}
+                {PHONE_DISPLAY}
               </a>
             </li>
             <li>
               <a
-                href={TWOGIS_LINK}
+                href={MAP_2GIS}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-2.5 text-[14px] text-white/70 hover:text-white transition-colors"
@@ -96,15 +99,15 @@ export function Footer() {
         </div>
       </div>
 
-      {/*  Bottom bar  */}
+      {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="container-clever flex flex-col sm:flex-row items-center justify-between py-4 gap-2">
           <p className="text-[12px] text-white/30">
-            © {year} Clever. Все права защищены. <br />
+            © {year} Clever. {t("rights")} <br />
             CREATED BY → TODAY.DEVELOPMENT
           </p>
           <a
-            href={`https://wa.me/${WHATSAPP}`}
+            href={WA_GENERAL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[12px] text-white/40 hover:text-clover transition-colors"

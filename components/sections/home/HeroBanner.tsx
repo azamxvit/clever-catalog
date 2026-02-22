@@ -1,18 +1,20 @@
-import Link from "next/link";
+"use client";
+
+// components/sections/home/HeroBanner.tsx
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { ArrowRight, MessageCircle } from "lucide-react";
+import { Link } from "@/lib/routing";
 import { WA_GENERAL } from "@/lib/constants";
 
-const STATS = [
-  { value: "500+",  label: "Позиций в наличии" },
-  { value: "5 лет", label: "На рынке Атырау"   },
-  { value: "3 дня", label: "Среднее время укладки" },
-  { value: "0 ₸",   label: "Консультация"      },
-];
+const STAT_KEYS = ["stat1", "stat2", "stat3", "stat4"] as const;
 
 export function HeroBanner() {
+  const t = useTranslations("home.hero");
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-[#052150]">
+
       {/* BG Image */}
       <div className="absolute inset-0">
         <Image
@@ -36,16 +38,17 @@ export function HeroBanner() {
         }}
       />
 
-      {/* Золотая вертикальная линия — декор */}
+      {/* Золотая вертикальная линия */}
       <div className="absolute left-[max(2rem,calc(50%-600px))] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#c9a96e]/30 to-transparent hidden lg:block" />
 
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 pb-20">
         <div className="max-w-[640px]">
+
           {/* Бейдж */}
           <div className="inline-flex items-center gap-2.5 mb-8 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#3a8a3f] animate-pulse" />
             <span className="text-[11px] font-medium tracking-[0.22em] uppercase text-white/60">
-              Атырау · ТД Anna · Сырым Датова 54
+              {t("badge")}
             </span>
           </div>
 
@@ -54,14 +57,14 @@ export function HeroBanner() {
             className="font-serif text-[56px] sm:text-[72px] lg:text-[84px] font-semibold leading-[0.95] text-white mb-8"
             style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
           >
-            Полы, <em className="not-italic text-[#c9a96e]">которые</em>
+            {t("heading")} <em className="not-italic text-[#c9a96e]">{t("headingAccent1")}</em>
             <br />
-            говорят <em className="not-italic text-[#c9a96e]">за вас</em>
+            {t("heading2")} <em className="not-italic text-[#c9a96e]">{t("headingAccent2")}</em>
           </h1>
 
           {/* Подпись */}
           <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/55 max-w-[480px] mb-10">
-            Ламинат, керамогранит и кафель от ведущих производителей. Подберём покрытие под ваш интерьер — бесплатная консультация в WhatsApp.
+            {t("subheading")}
           </p>
 
           {/* CTA */}
@@ -71,7 +74,7 @@ export function HeroBanner() {
               className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white text-[#052150] text-[14px] font-semibold
                          shadow-[0_4px_24px_rgba(255,255,255,0.18)] hover:bg-[#f8f5f0] transition-all duration-200"
             >
-              Смотреть каталог
+              {t("catalogBtn")}
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <a
@@ -82,21 +85,23 @@ export function HeroBanner() {
                          text-[14px] font-medium text-white hover:bg-white/10 transition-all duration-200"
             >
               <MessageCircle className="w-4 h-4 text-[#3a8a3f]" />
-              Написать нам
+              {t("contactBtn")}
             </a>
           </div>
 
           {/* Статистика */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-white/8">
-            {STATS.map((s) => (
-              <div key={s.label}>
+            {STAT_KEYS.map((key) => (
+              <div key={key}>
                 <p
                   className="text-[28px] font-semibold text-white leading-none mb-1"
                   style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
                 >
-                  {s.value}
+                  {t(`${key}Value`)}
                 </p>
-                <p className="text-[11px] tracking-wide text-white/38 uppercase">{s.label}</p>
+                <p className="text-[11px] tracking-wide text-white/38 uppercase">
+                  {t(`${key}Label`)}
+                </p>
               </div>
             ))}
           </div>
